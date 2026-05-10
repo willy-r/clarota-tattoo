@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ARTIST } from "@/lib/content";
 
@@ -28,17 +29,14 @@ export default function About() {
             className="relative"
           >
             <div className="relative aspect-[3/4] w-full max-w-md mx-auto lg:mx-0 overflow-hidden rounded-sm bg-[#111111] border border-[#1e1e1e]">
-              {/* Placeholder — replace with real photo */}
-              <div
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  background: "linear-gradient(135deg, #111111 0%, #1e1e1e 50%, #111111 100%)",
-                }}
-              >
-                <span className="font-display text-9xl font-black italic text-[#1e1e1e] select-none">
-                  {ARTIST.name[0]}
-                </span>
-              </div>
+              <Image
+                src="/profile.jpg"
+                alt={`${ARTIST.name} - Tatuadora`}
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
               {/* Purple duotone overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#4c1d95]/40 via-transparent to-transparent" />
             </div>

@@ -18,7 +18,7 @@ export default function Hero() {
       </div>
 
       {/* Floating badge */}
-      <div className="absolute top-32 right-8 md:right-16 z-10">
+      <div className="hidden md:block absolute top-32 right-16 z-10">
         <div className="relative flex h-24 w-24 items-center justify-center">
           <div
             className="animate-spin-slow absolute inset-0 rounded-full"

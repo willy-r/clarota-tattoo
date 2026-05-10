@@ -2,9 +2,9 @@ export const ARTIST = {
   name: "Clarota",
   title: "Tatuadora · Ilustração · Character Design",
   city: "Fortaleza, CE",
-  bio: "Me chamo Clara, tatuadora apaixonada por transformar ideias em arte na pele. Especialista em Blackwork e tatuagens Geek, trazendo referências de anime, games, cultura pop e artes autorais em cada projeto.",
+  bio: "Oie, eu sou a Clara! Ilustradora, character designer e agora tatuadora apaixonadíssima na estética alternativa. Meu trabalho tem foco no Trash Tattoo, Blackwork e Geek, mas estou sempre aberta pra pojetos autorais personalizados!",
   experience: "5",
-  specialties: ["Blackwork", "Geek"],
+  specialties: ["Trash Tattoo", "Blackwork", "Geek"],
 };
 
 export const CONTACT = {
@@ -23,6 +23,12 @@ export const STATS = {
 };
 
 export const STYLES = [
+  {
+    name: "Trash Tattoo",
+    description:
+      "Estética crua, linhas irregulares e um toque de humor ácido. Tatuagens que parecem ter saído de um caderno rabiscado, mas com significado profundo.",
+    icon: "☠",
+  },
   {
     name: "Blackwork",
     description:
