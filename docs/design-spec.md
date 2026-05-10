@@ -25,6 +25,7 @@
 **Dark Editorial com toque de Arte Macabra Elegante.**
 
 Referências visuais:
+
 - Revistas de arte underground (Juxtapoz, Inked)
 - Pôsteres de shows de rock/metal com tipografia impactante
 - Exposições de galeria contemporânea de arte dark
@@ -43,50 +44,58 @@ Referências visuais:
 ## Seções da Landing Page
 
 ### `<Hero />`
+
 - Nome gigante com clipping mask (gradiente roxa aparece através das letras)
 - Stagger de entrada letra a letra (Framer Motion)
 - CTA: "Ver Portfólio" (outline) + "Agendar agora" (filled, WhatsApp)
-- Badge "✦ ACEITANDO CLIENTES ✦" — spinning conic gradient, visível só em desktop
+- Badge "✦ AGENDA ABERTA ✦" — spinning conic gradient, visível só em desktop
 - Scroll indicator: linha vertical animada
 
 ### `<About />`
+
 - Grid assimétrico: foto (aspect 3/4, duotone roxo) à esquerda, bio + stats à direita
 - Stats animados com counter ao entrar no viewport: tatuagens, anos, estilos
 
 ### `<Portfolio />`
+
 - Masonry grid com items de aspect variável (`tall`, `wide`, `square`)
 - Hover: overlay com título e estilo
 - Click: abre Dialog fullscreen
 - Filtros por estilo (Blackwork, Geek, Trash Tattoo…)
 
 ### `<Styles />`
+
 - Cards em scroll horizontal no mobile, grid no desktop
 - Cada card: ícone + nome + descrição curta
 
 ### `<Testimonials />`
+
 - Carousel automático, pausa no hover
 - Quotes em Cormorant Garamond italic
 
 ### `<Booking />`
+
 - Timeline vertical animada com 5 etapas
 - CTA "QUERO MINHA TATTOO" linkando para WhatsApp
 
 ### `<Contact />`
+
 - Grid 3 colunas: WhatsApp, Instagram, Email
 - Hover levanta card com sombra roxa
 
 ### `<Footer />`
+
 - Frase: _"A pele é o canvas mais honesto que existe."_
 
 ---
 
 ## Responsividade
 
-| Breakpoint         | Layout                                           |
-| ------------------ | ------------------------------------------------ |
-| Mobile (< 768px)   | Stack vertical, menu hamburger (Sheet shadcn)    |
-| Tablet (768–1024px)| Grid 2 colunas, ajustes tipográficos             |
-| Desktop (> 1024px) | Layout completo com assimetrias e efeitos hover  |
+| Breakpoint          | Layout                                          |
+| ------------------- | ----------------------------------------------- |
+| Mobile (< 768px)    | Stack vertical, menu hamburger (Sheet shadcn)   |
+| Tablet (768–1024px) | Grid 2 colunas, ajustes tipográficos            |
+| Desktop (> 1024px)  | Layout completo com assimetrias e efeitos hover |
 
 ---
 

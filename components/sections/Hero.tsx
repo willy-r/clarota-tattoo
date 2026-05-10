@@ -29,9 +29,9 @@ export default function Hero() {
           />
           <div className="absolute inset-[2px] rounded-full bg-[#0a0a0a]" />
           <span className="relative font-heading text-[8px] tracking-[0.3em] text-[#a855f7] leading-tight text-center">
-            ✦ ACEITANDO
+            ✦ AGENDA
             <br />
-            CLIENTES ✦
+            ABERTA ✦
           </span>
         </div>
       </div>
