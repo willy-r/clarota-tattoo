@@ -36,10 +36,11 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: "Clarota Tattoo",
   description:
-    "Tatuadora especialista em Blackwork e Geek. Agendamentos via WhatsApp.",
+    "Tatuadora especialista em Trash Tattoo, Blackwork e Geek. Agendamentos via WhatsApp ou Instagram.",
   openGraph: {
     title: "Clarota Tattoo",
-    description: "Tatuadora especialista em Blackwork e Geek.",
+    description:
+      "Tatuadora especialista em Trash Tattoo, Blackwork e Geek. Agendamentos via WhatsApp ou Instagram.",
   },
 };
 
