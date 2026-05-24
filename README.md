@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Clarota Tattoo — Portfolio
 
-## Getting Started
+Site de portfólio single-page para a tatuadora Clarota. Construído com Next.js 16, React 19, Tailwind CSS v4 e Framer Motion.
 
-First, run the development server:
+![Preview da página inicial](./docs/page.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS v4** — configurado via `app/globals.css` com `@theme {}`, sem `tailwind.config.js`
+- **Framer Motion** — animações de entrada por seção
+- **shadcn/ui + Base UI** — componentes de UI
+
+## Estrutura
+
+```
+app/
+  page.tsx              # página principal — renderiza todas as seções em ordem
+  layout.tsx            # layout raiz, metadados SEO
+  globals.css           # tokens de design (@theme), classes utilitárias, fontes
+  opengraph-image.tsx   # imagem OG gerada dinamicamente
+
+components/
+  sections/             # Hero, About, Portfolio, Styles, Testimonials, Booking, Contact, Footer
+  shared/               # CursorGlow, Navbar, ScrollProgress, NoiseOverlay
+
+lib/
+  content.ts            # todo o conteúdo do site (ARTIST, CONTACT, STATS, STYLES, TESTIMONIALS, PORTFOLIO_ITEMS)
+
+public/
+  portfolio/*.webp      # imagens do portfólio
+  profile.jpg           # foto da artista
+
+docs/
+  design-spec.md        # especificação de cores, tipografia e layout
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Comandos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run dev      # servidor de desenvolvimento em http://localhost:3000
+npm run build    # build de produção (também valida tipos TypeScript)
+npm run start    # serve o build de produção
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Conteúdo
 
-## Learn More
+**Todo o conteúdo do site está em `lib/content.ts`.** Nunca hardcode textos dentro dos componentes. Para alterar nome, bio, estilos, depoimentos ou itens do portfólio, edite apenas esse arquivo.
 
-To learn more about Next.js, take a look at the following resources:
+## Fontes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Classe           | Fonte              | Uso                   |
+| ---------------- | ------------------ | --------------------- |
+| `font-display`   | Playfair Display   | Títulos, nome no hero |
+| `font-heading`   | Bebas Neue         | Labels, UI, CTAs      |
+| `font-sans`      | DM Sans            | Corpo de texto        |
+| `font-editorial` | Cormorant Garamond | Citações em itálico   |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+Recomendado via [Vercel](https://vercel.com). Basta conectar o repositório — nenhuma variável de ambiente é necessária.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licença
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[CC BY-NC 4.0](./LICENSE) — uso não comercial permitido com atribuição.
