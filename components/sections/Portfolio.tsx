@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Share2, X } from "lucide-react";
+import { Landmark, Share2, X } from "lucide-react";
 import {
   PORTFOLIO_ITEMS,
   ARTIST,
@@ -71,16 +72,27 @@ export default function Portfolio() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="mb-12"
+          className="mb-12 flex items-end justify-between gap-6"
         >
-          <p className="font-heading text-sm tracking-[0.4em] text-[#7c3aed] mb-3">
-            PORTFÓLIO
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black italic text-[#e8e0f0] leading-tight">
-            Minhas
-            <br />
-            <span className="text-[#a855f7]">artes</span>
-          </h2>
+          <div>
+            <p className="font-heading text-sm tracking-[0.4em] text-[#7c3aed] mb-3">
+              PORTFÓLIO
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black italic text-[#e8e0f0] leading-tight">
+              Minhas
+              <br />
+              <span className="text-[#a855f7]">artes</span>
+            </h2>
+          </div>
+
+          {/* O museu 3D é só para desktop; no celular fica só o mosaico */}
+          <Link
+            href="/museu"
+            className="hidden md:inline-flex items-center gap-3 font-heading text-sm tracking-[0.3em] px-6 py-3 border border-[#7c3aed]/40 text-[#a855f7] rounded-full hover:bg-[#7c3aed] hover:text-white hover:border-[#7c3aed] transition-all duration-300"
+          >
+            <Landmark size={16} />
+            VER EM MODO MUSEU
+          </Link>
         </motion.div>
 
         {/* Masonry grid */}
