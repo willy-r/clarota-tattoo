@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { Suspense, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -29,7 +29,13 @@ const MESSAGES: Record<Exclude<Support, "ok" | "checking">, string> = {
 export default function MuseumLoader() {
   const support = useSyncExternalStore<Support>(subscribe, getSupport, () => "checking");
 
-  if (support === "ok") return <MuseumScene />;
+  if (support === "ok") {
+    return (
+      <Suspense fallback={null}>
+        <MuseumScene />
+      </Suspense>
+    );
+  }
   if (support === "checking") return null;
 
   return (

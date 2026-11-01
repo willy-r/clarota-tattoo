@@ -10,16 +10,21 @@ const LOOK_SMOOTHING = 3.2;
 const DRAG_SENSITIVITY = 0.0035;
 const MAX_YAW = 0.7;
 const MAX_PITCH = 0.35;
+// Abaixo disso a câmera é considerada parada e o canvas para de renderizar.
+const SETTLED = 0.0005;
 
 type TourCameraProps = { pose: CameraPose };
 
 /**
  * Leva a câmera suavemente até a pose da obra atual. Arrastar o mouse olha em volta
  * (com limite), e ao soltar o olhar volta sozinho para a obra.
+ *
+ * O canvas roda em frameloop "demand": só pede frame novo enquanto algo está se mexendo.
  */
 export default function TourCamera({ pose }: TourCameraProps) {
   const camera = useThree((state) => state.camera);
   const canvas = useThree((state) => state.gl.domElement);
+  const invalidate = useThree((state) => state.invalidate);
   const target = useRef(new THREE.Vector3(...pose.position));
   const look = useRef(new THREE.Vector3(...pose.lookAt));
   const lookTarget = useRef(new THREE.Vector3(...pose.lookAt));
@@ -28,7 +33,8 @@ export default function TourCamera({ pose }: TourCameraProps) {
   useEffect(() => {
     target.current.set(...pose.position);
     lookTarget.current.set(...pose.lookAt);
-  }, [pose]);
+    invalidate();
+  }, [pose, invalidate]);
 
   useEffect(() => {
     const onDown = (e: PointerEvent) => {
@@ -43,9 +49,11 @@ export default function TourCamera({ pose }: TourCameraProps) {
       d.pitch = THREE.MathUtils.clamp(d.pitch + (e.clientY - d.y) * DRAG_SENSITIVITY, -MAX_PITCH, MAX_PITCH);
       d.x = e.clientX;
       d.y = e.clientY;
+      invalidate();
     };
     const onUp = () => {
       drag.current.active = false;
+      invalidate();
     };
     canvas.addEventListener("pointerdown", onDown);
     window.addEventListener("pointermove", onMove);
@@ -55,7 +63,7 @@ export default function TourCamera({ pose }: TourCameraProps) {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
     };
-  }, [canvas]);
+  }, [canvas, invalidate]);
 
   useFrame((_, dt) => {
     const d = drag.current;
@@ -80,6 +88,14 @@ export default function TourCamera({ pose }: TourCameraProps) {
     camera.lookAt(l);
     camera.rotateY(d.yaw);
     camera.rotateX(d.pitch);
+
+    const moving =
+      d.active ||
+      Math.abs(d.yaw) > SETTLED ||
+      Math.abs(d.pitch) > SETTLED ||
+      p.distanceTo(target.current) > SETTLED ||
+      l.distanceTo(lookTarget.current) > SETTLED;
+    if (moving) invalidate();
   });
 
   return null;

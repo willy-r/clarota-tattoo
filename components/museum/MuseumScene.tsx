@@ -1,40 +1,26 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, use, useCallback, useEffect, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import * as THREE from "three";
-import { PORTFOLIO_ITEMS } from "@/lib/content";
+import { ARTIST, PORTFOLIO_ITEMS } from "@/lib/content";
 import Artwork from "./Artwork";
 import MuseumHud from "./MuseumHud";
-import MuseumRoom from "./MuseumRoom";
+import MuseumRoom, { useMuseumAssets } from "./MuseumRoom";
 import TourCamera from "./TourCamera";
-import { ROOM, artworkPose, overviewPose } from "./layout";
+import { artworkPose, overviewPose, roomLength } from "./layout";
+import { loadMuseumFonts } from "./textures";
 
 // -1 = entrada, com a visão do corredor inteiro.
 const ENTRANCE = -1;
 
-function createLightPoolTexture(): THREE.Texture {
-  const size = 256;
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Canvas 2D indisponível");
-  const gradient = ctx.createRadialGradient(size / 2, size * 0.42, 0, size / 2, size * 0.42, size / 2);
-  gradient.addColorStop(0, "rgba(255, 244, 230, 0.9)");
-  gradient.addColorStop(0.45, "rgba(255, 240, 225, 0.3)");
-  gradient.addColorStop(1, "rgba(255, 240, 225, 0)");
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, size, size);
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
-}
-
 export default function MuseumScene() {
   const items = PORTFOLIO_ITEMS;
+  // As plaquetas e o letreiro são desenhados com as fontes do site — espera elas baixarem.
+  const fonts = use(loadMuseumFonts());
+  const assets = useMuseumAssets();
   const [index, setIndex] = useState(ENTRANCE);
-  const lightPool = useMemo(createLightPoolTexture, []);
+  const [loaded, setLoaded] = useState<ReadonlySet<string>>(() => new Set());
+
   const pose = useMemo(
     () => (index === ENTRANCE ? overviewPose(items.length) : artworkPose(index)),
     [index, items.length],
@@ -42,6 +28,11 @@ export default function MuseumScene() {
 
   const next = useCallback(() => setIndex((i) => Math.min(i + 1, items.length - 1)), [items.length]);
   const prev = useCallback(() => setIndex((i) => Math.max(i - 1, ENTRANCE)), []);
+  const markLoaded = useCallback(
+    (slug: string) =>
+      setLoaded((current) => (current.has(slug) ? current : new Set(current).add(slug))),
+    [],
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -57,30 +48,46 @@ export default function MuseumScene() {
   const initial = overviewPose(items.length);
 
   return (
-    <div className="fixed inset-0 bg-[#0a0a0a]">
+    <div className="fixed inset-0 bg-[#08080a]">
       <Canvas
-        dpr={[1, 2]}
+        frameloop="demand"
+        dpr={[1, 1.5]}
         camera={{ fov: 50, near: 0.1, far: 80, position: initial.position }}
-        gl={{ antialias: true }}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
       >
-        <color attach="background" args={["#0a0a0a"]} />
-        <fog attach="fog" args={["#0a0a0a", 7, ROOM.artSpacing * 9]} />
-        <MuseumRoom artworkCount={items.length} />
-        <Suspense fallback={null}>
-          {items.map((item, i) => (
+        <color attach="background" args={["#08080a"]} />
+        <fog attach="fog" args={["#08080a", 10, roomLength(items.length) + 12]} />
+        <MuseumRoom
+          artworkCount={items.length}
+          fonts={fonts}
+          artistName={ARTIST.name}
+          artistTitle={ARTIST.title}
+        />
+        {items.map((item, i) => (
+          // Suspense por obra: cada uma aparece assim que a foto chega, e o progresso anda.
+          <Suspense key={item.slug} fallback={null}>
             <Artwork
-              key={item.slug}
               index={i}
-              image={item.image}
+              item={item}
+              artist={ARTIST.name}
+              fonts={fonts}
+              assets={assets}
               active={i === index}
-              lightPool={lightPool}
               onSelect={setIndex}
+              onLoaded={markLoaded}
             />
-          ))}
-        </Suspense>
+          </Suspense>
+        ))}
         <TourCamera pose={pose} />
       </Canvas>
-      <MuseumHud items={items} index={index} onPrev={prev} onNext={next} />
+      <MuseumHud
+        items={items}
+        index={index}
+        progress={loaded.size / items.length}
+        onSelect={setIndex}
+        onPrev={prev}
+        onNext={next}
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CursorGlow from "@/components/shared/CursorGlow";
+import NoiseOverlay from "@/components/shared/NoiseOverlay";
 import MuseumLoader from "@/components/museum/MuseumLoader";
 
 export const metadata: Metadata = {
@@ -11,6 +12,7 @@ export default function MuseumPage() {
   return (
     <main>
       <CursorGlow />
+      <NoiseOverlay />
       <MuseumLoader />
     </main>
   );
