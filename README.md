@@ -9,7 +9,7 @@ Site de portfólio single-page para a tatuadora Clarota. Construído com Next.js
 - **Next.js 16** (App Router)
 - **React 19**
 - **TypeScript**
-- **Tailwind CSS v4** — configurado via `app/globals.css` com `@theme {}`, sem `tailwind.config.js`
+- **Tailwind CSS v4** — configurado via `app/(site)/globals.css` com `@theme {}`, sem `tailwind.config.js`
 - **Framer Motion** — animações de entrada por seção
 - **shadcn/ui + Base UI** — componentes de UI
 - **Keystatic** — painel de conteúdo em `/keystatic`, sem banco (conteúdo em JSON no repo)
