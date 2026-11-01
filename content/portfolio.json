@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "title": {
+        "name": "Máscara Noh — Hannya",
+        "slug": "hannya"
+      },
+      "style": "Blackwork",
+      "aspect": "tall",
+      "image": "/portfolio/items/hannya/image.webp"
+    },
+    {
+      "title": {
+        "name": "Cartelinha — Nostalgia Pessoal",
+        "slug": "cartelinha-nostalgia"
+      },
+      "style": "Geek",
+      "aspect": "square",
+      "image": "/portfolio/items/cartelinha-nostalgia/image.webp"
+    },
+    {
+      "title": {
+        "name": "Arte Autoral",
+        "slug": "arte-autoral-2"
+      },
+      "style": "Blackwork",
+      "aspect": "wide",
+      "image": "/portfolio/items/arte-autoral-2/image.webp"
+    },
+    {
+      "title": {
+        "name": "Coelhinhos — Watership Down",
+        "slug": "coelhos-watership-down"
+      },
+      "style": "Geek",
+      "aspect": "square",
+      "image": "/portfolio/items/coelhos-watership-down/image.webp"
+    },
+    {
+      "title": {
+        "name": "Cartelinha — Pokemons",
+        "slug": "cartelinha-pokemons"
+      },
+      "style": "Blackwork",
+      "aspect": "tall",
+      "image": "/portfolio/items/cartelinha-pokemons/image.webp"
+    },
+    {
+      "title": {
+        "name": "Molenga — Saudades",
+        "slug": "molenga"
+      },
+      "style": "Geek",
+      "aspect": "tall",
+      "image": "/portfolio/items/molenga/image.webp"
+    },
+    {
+      "title": {
+        "name": "Patinhos — A Viagem de Chihiro",
+        "slug": "patinhos-a-viagem-de-chihiro"
+      },
+      "style": "Blackwork",
+      "aspect": "square",
+      "image": "/portfolio/items/patinhos-a-viagem-de-chihiro/image.webp"
+    },
+    {
+      "title": {
+        "name": "Lucy",
+        "slug": "lucy"
+      },
+      "style": "Geek",
+      "aspect": "wide",
+      "image": "/portfolio/items/lucy/image.webp"
+    },
+    {
+      "title": {
+        "name": "Arte Autoral",
+        "slug": "arte-autoral"
+      },
+      "style": "Blackwork",
+      "aspect": "square",
+      "image": "/portfolio/items/arte-autoral/image.webp"
+    }
+  ]
+}

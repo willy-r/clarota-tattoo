@@ -5,12 +5,15 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Share2, X } from "lucide-react";
-import { PORTFOLIO_ITEMS, ARTIST, CONTACT } from "@/lib/content";
+import {
+  PORTFOLIO_ITEMS,
+  ARTIST,
+  CONTACT,
+  type PortfolioItem,
+} from "@/lib/content";
 
 export default function Portfolio() {
-  const [selected, setSelected] = useState<(typeof PORTFOLIO_ITEMS)[0] | null>(
-    null,
-  );
+  const [selected, setSelected] = useState<PortfolioItem | null>(null);
   const zoomedRef = useRef(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,7 +39,7 @@ export default function Portfolio() {
   };
 
   const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!selected?.image || !imgRef.current || !containerRef.current) return;
+    if (!imgRef.current || !containerRef.current) return;
     if (!zoomedRef.current) {
       const { x, y } = getXY(e);
       imgRef.current.style.transition = "transform 0.3s ease";
@@ -84,7 +87,7 @@ export default function Portfolio() {
         <div className="columns-2 md:columns-3 gap-3 space-y-3">
           {PORTFOLIO_ITEMS.map((item, i) => (
             <motion.div
-              key={item.id}
+              key={item.slug}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.06 }}
@@ -102,23 +105,13 @@ export default function Portfolio() {
                         : "1/1",
                 }}
               >
-                {item.image ? (
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-[#111111] transition-transform duration-500 group-hover:scale-105">
-                    <div className="absolute inset-0 flex items-end justify-start p-4 opacity-20">
-                      <span className="font-display font-black italic text-6xl text-white">
-                        {item.id}
-                      </span>
-                    </div>
-                  </div>
-                )}
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
 
                 {/* Hover overlay */}
                 <div className="absolute inset-0 flex flex-col items-start justify-end bg-gradient-to-t from-[#0a0a0a]/90 via-[#0a0a0a]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
@@ -170,12 +163,12 @@ export default function Portfolio() {
             className="relative flex-1 min-h-0 bg-[#0d0d0d] overflow-hidden"
             style={{
               minHeight: "300px",
-              cursor: selected?.image ? "zoom-in" : "default",
+              cursor: "zoom-in",
             }}
             onClick={handleImageClick}
             onMouseMove={handleMouseMove}
           >
-            {selected?.image ? (
+            {selected && (
               <Image
                 ref={imgRef as React.Ref<HTMLImageElement>}
                 src={selected.image}
@@ -184,12 +177,6 @@ export default function Portfolio() {
                 sizes="(max-width: 768px) 90vw, 768px"
                 style={{ objectFit: "contain", willChange: "transform" }}
               />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                <span className="font-display font-black italic text-[20vw] text-white select-none">
-                  {ARTIST.name[0]}
-                </span>
-              </div>
             )}
           </div>
 
