@@ -38,8 +38,11 @@ function BrandMark() {
 }
 
 export default config({
+  // Em dev grava nos arquivos locais. NEXT_PUBLIC_KEYSTATIC_STORAGE=github força o modo GitHub
+  // em dev — é assim que o GitHub App é criado na primeira vez (docs/PAINEL.md).
   storage:
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === "production" ||
+    process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE === "github"
       ? { kind: "github", repo: "willy-r/clarota-tattoo" }
       : { kind: "local" },
   locale: "pt-BR",
