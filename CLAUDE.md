@@ -14,21 +14,27 @@ npm run build    # production build (also validates types)
 npm run start    # serve production build
 ```
 
+Admin panel in dev: `http://localhost:3000/keystatic` (writes straight to `content/` and `public/portfolio/`).
+
 No lint or test scripts exist.
 
 ---
 
 ## Architecture
 
-Single-page portfolio (landing page) for tattoo artist Clarota. All sections render in `app/page.tsx` in order; navigation scrolls within the same page.
+Single-page portfolio (landing page) for tattoo artist Clarota. All sections render in `app/(site)/page.tsx` in order; navigation scrolls within the same page. `app/(site)/museu` is a desktop-only 3D gallery of the portfolio (`components/museum/`, React Three Fiber, loaded via `next/dynamic` with `ssr: false` so three.js never ships to `/`).
 
-**All site content lives in `lib/content.ts`** — `ARTIST`, `CONTACT`, `STATS`, `STYLES`, `TESTIMONIALS`, and `PORTFOLIO_ITEMS`. Never hardcode copy inside components.
+`app/(site)` and `app/keystatic` are separate root layouts: the site's `globals.css` sets `cursor: none`, which must not leak into the admin.
+
+### Content
+
+**All site content lives in `content/*.json`**, edited through Keystatic at `/keystatic` (schema in `keystatic.config.tsx`; local file storage in dev, GitHub storage in production). `lib/content.ts` imports the JSON and exports `ARTIST`, `CONTACT`, `STYLES`, `TESTIMONIALS`, `PORTFOLIO_ITEMS` — components import from there. Never hardcode copy inside components. When adding a field, add it to `keystatic.config.tsx` and the JSON together. Setup/usage: `docs/PAINEL.md`.
 
 Design spec (colors, typography, section layout intent): `docs/design-spec.md`.
 
 ### Tailwind v4
 
-Configured entirely in `app/globals.css` via `@theme {}`. There is no `tailwind.config.js`. All design tokens (`--color-purple`, `--font-display`, etc.) are CSS variables defined there. Use `bg-[var(--color-purple)]` or `text-[#7c3aed]` syntax — not arbitrary Tailwind config values.
+Configured entirely in `app/(site)/globals.css` via `@theme {}`. There is no `tailwind.config.js`. All design tokens (`--color-purple`, `--font-display`, etc.) are CSS variables defined there. Use `bg-[var(--color-purple)]` or `text-[#7c3aed]` syntax — not arbitrary Tailwind config values.
 
 ### Font classes
 
@@ -53,6 +59,6 @@ All section entry animations use Framer Motion's `useInView({ once: true })`. St
 
 ### Static assets
 
-- Portfolio images: `public/portfolio/*.webp` — filenames referenced in `PORTFOLIO_ITEMS` in `lib/content.ts`
+- Portfolio images: `public/portfolio/items/<slug>/image.webp` — the path Keystatic writes for array items; keep this layout so saves don't rename files
 - Profile photo: `public/profile.jpg` — used in `About.tsx`
-- `app/icon.svg` and `app/opengraph-image.tsx` are Next.js metadata file conventions; picked up automatically by the framework
+- `app/(site)/icon.svg` and `app/(site)/opengraph-image.tsx` are Next.js metadata file conventions; picked up automatically by the framework

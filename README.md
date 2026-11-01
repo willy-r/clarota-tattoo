@@ -12,29 +12,40 @@ Site de portfólio single-page para a tatuadora Clarota. Construído com Next.js
 - **Tailwind CSS v4** — configurado via `app/globals.css` com `@theme {}`, sem `tailwind.config.js`
 - **Framer Motion** — animações de entrada por seção
 - **shadcn/ui + Base UI** — componentes de UI
+- **Keystatic** — painel de conteúdo em `/keystatic`, sem banco (conteúdo em JSON no repo)
+- **React Three Fiber + drei** — museu 3D em `/museu` (só desktop)
 
 ## Estrutura
 
 ```
 app/
-  page.tsx              # página principal — renderiza todas as seções em ordem
-  layout.tsx            # layout raiz, metadados SEO
-  globals.css           # tokens de design (@theme), classes utilitárias, fontes
-  opengraph-image.tsx   # imagem OG gerada dinamicamente
+  (site)/
+    page.tsx            # página principal — renderiza todas as seções em ordem
+    museu/page.tsx      # museu 3D (desktop)
+    layout.tsx          # layout raiz do site, metadados SEO
+    globals.css         # tokens de design (@theme), classes utilitárias, fontes
+    opengraph-image.tsx # imagem OG gerada dinamicamente
+  keystatic/            # painel de conteúdo (root layout próprio, sem o CSS do site)
+  api/keystatic/        # API do painel
 
 components/
   sections/             # Hero, About, Portfolio, Styles, Testimonials, Booking, Contact, Footer
   shared/               # CursorGlow, Navbar, ScrollProgress, NoiseOverlay
+  museum/               # cena 3D, câmera do tour, HUD
+
+content/*.json          # conteúdo do site — editado pelo painel
+keystatic.config.tsx    # schema do painel (campos, rótulos, validações)
 
 lib/
-  content.ts            # todo o conteúdo do site (ARTIST, CONTACT, STATS, STYLES, TESTIMONIALS, PORTFOLIO_ITEMS)
+  content.ts            # lê content/*.json e exporta ARTIST, CONTACT, STYLES, TESTIMONIALS, PORTFOLIO_ITEMS
 
 public/
-  portfolio/*.webp      # imagens do portfólio
-  profile.jpg           # foto da artista
+  portfolio/items/<slug>/image.webp  # imagens do portfólio (layout gerado pelo Keystatic)
+  profile.jpg                        # foto da artista
 
 docs/
   design-spec.md        # especificação de cores, tipografia e layout
+  PAINEL.md             # setup e uso do painel de conteúdo
 ```
 
 ## Comandos
@@ -47,7 +58,11 @@ npm run start    # serve o build de produção
 
 ## Conteúdo
 
-**Todo o conteúdo do site está em `lib/content.ts`.** Nunca hardcode textos dentro dos componentes. Para alterar nome, bio, estilos, depoimentos ou itens do portfólio, edite apenas esse arquivo.
+**Todo o conteúdo do site está em `content/*.json`** e é editado pelo painel em `/keystatic` (em dev: `http://localhost:3000/keystatic`, sem login). Nunca hardcode textos dentro dos componentes. Setup do painel em produção e guia de uso: [`docs/PAINEL.md`](./docs/PAINEL.md).
+
+## Museu 3D
+
+`/museu` mostra o portfólio como uma galeria 3D com tour guiado (setas/A-D, clique na obra, arrastar para olhar, Esc para a entrada). As obras vêm de `PORTFOLIO_ITEMS`, então o que entra pelo painel aparece no museu automaticamente. Em telas de toque ou estreitas a rota mostra um aviso e leva de volta ao portfólio; o botão de entrada fica escondido no celular.
 
 ## Fontes
 
@@ -60,7 +75,7 @@ npm run start    # serve o build de produção
 
 ## Deploy
 
-Recomendado via [Vercel](https://vercel.com). Basta conectar o repositório — nenhuma variável de ambiente é necessária.
+Recomendado via [Vercel](https://vercel.com). Basta conectar o repositório. O site funciona sem variáveis de ambiente; o painel `/keystatic` só liga em produção depois de cadastrar as variáveis do GitHub App (ver [`docs/PAINEL.md`](./docs/PAINEL.md) e `.env.example`).
 
 ## Licença
 
