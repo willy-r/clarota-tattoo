@@ -21,6 +21,13 @@ import {
 
 const PAGE_SIZE = 9;
 
+// Proporção usada até a foto carregar e informar a real (largura / altura).
+const ASPECT_RATIO: Record<PortfolioItem["aspect"], number> = {
+  tall: 3 / 4,
+  square: 1,
+  wide: 16 / 9,
+};
+
 // Só vira aba a categoria que tem pelo menos uma arte cadastrada.
 const TABS = PORTFOLIO_CATEGORIES.map((category) => ({
   ...category,
@@ -43,6 +50,8 @@ export default function Portfolio() {
     setActiveTab(value);
     setVisibleCount(PAGE_SIZE);
   };
+  // Proporção real de cada foto já aberta: a área do zoom segue a foto em vez de sobrar faixa preta.
+  const [ratios, setRatios] = useState<Record<string, number>>({});
   const zoomedRef = useRef(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,7 +65,10 @@ export default function Portfolio() {
       imgRef.current.style.transform = "scale(1)";
       imgRef.current.style.transformOrigin = "50% 50%";
     }
-    if (containerRef.current) containerRef.current.style.cursor = "zoom-in";
+    if (containerRef.current) {
+      containerRef.current.style.cursor = "zoom-in";
+      containerRef.current.style.touchAction = "manipulation";
+    }
   }, [selected]);
 
   const getXY = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -75,16 +87,20 @@ export default function Portfolio() {
       imgRef.current.style.transformOrigin = `${x}% ${y}%`;
       imgRef.current.style.transform = "scale(2.5)";
       containerRef.current.style.cursor = "zoom-out";
+      // Com zoom, arrastar o dedo explora a foto em vez de rolar a página
+      containerRef.current.style.touchAction = "none";
       zoomedRef.current = true;
     } else {
       imgRef.current.style.transition = "transform 0.3s ease";
       imgRef.current.style.transform = "scale(1)";
       containerRef.current.style.cursor = "zoom-in";
+      containerRef.current.style.touchAction = "manipulation";
       zoomedRef.current = false;
     }
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Pointer events cobrem mouse e toque: no celular, arrastar com zoom move a área ampliada.
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!zoomedRef.current || !imgRef.current) return;
     const { x, y } = getXY(e);
     imgRef.current.style.transition = "none";
@@ -250,20 +266,24 @@ export default function Portfolio() {
       >
         <DialogContent
           showCloseButton={false}
-          className="flex flex-col w-[90vw] max-w-[90vw] sm:max-w-3xl max-h-[85vh] gap-0 p-0 bg-[#0d0d0d] border-[#1e1e1e] text-[#e8e0f0] overflow-hidden"
+          className="flex flex-col w-[92vw] max-w-[92vw] sm:max-w-4xl max-h-[90vh] gap-0 p-0 bg-[#0d0d0d] border-[#1e1e1e] text-[#e8e0f0] overflow-hidden"
         >
           <DialogTitle className="sr-only">{selected?.title}</DialogTitle>
 
           {/* Image area */}
           <div
             ref={containerRef}
-            className="relative flex-1 min-h-0 bg-[#0d0d0d] overflow-hidden"
+            // A imagem usa `fill` (absoluta) e não dá altura ao container: a altura vem da
+            // proporção da foto, com teto para caber na tela junto com o rodapé.
+            className="relative w-full max-h-[60vh] sm:max-h-[72vh] shrink-0 bg-[#0d0d0d] overflow-hidden"
             style={{
-              minHeight: "300px",
               cursor: "zoom-in",
+              aspectRatio: selected
+                ? (ratios[selected.slug] ?? ASPECT_RATIO[selected.aspect])
+                : undefined,
             }}
             onClick={handleImageClick}
-            onMouseMove={handleMouseMove}
+            onPointerMove={handlePointerMove}
           >
             {selected && (
               <Image
@@ -273,6 +293,13 @@ export default function Portfolio() {
                 fill
                 // Resolução cheia: o zoom amplia 2.5x, e a versão de 768px ficaria borrada.
                 sizes="(max-width: 768px) 100vw, 1440px"
+                onLoad={(e) => {
+                  const { naturalWidth, naturalHeight } = e.currentTarget;
+                  const slug = selected.slug;
+                  setRatios((prev) =>
+                    prev[slug] ? prev : { ...prev, [slug]: naturalWidth / naturalHeight },
+                  );
+                }}
                 style={{ objectFit: "contain", willChange: "transform" }}
               />
             )}
