@@ -271,7 +271,8 @@ export default function Portfolio() {
                 src={selected.image}
                 alt={portfolioAlt(selected)}
                 fill
-                sizes="(max-width: 768px) 90vw, 768px"
+                // Resolução cheia: o zoom amplia 2.5x, e a versão de 768px ficaria borrada.
+                sizes="(max-width: 768px) 100vw, 1440px"
                 style={{ objectFit: "contain", willChange: "transform" }}
               />
             )}
