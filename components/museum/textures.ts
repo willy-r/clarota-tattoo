@@ -151,7 +151,7 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number,
 /** Plaqueta ao lado da obra, no mesmo tom das plaquetas do HUD. */
 export function createPlaqueTexture(
   fonts: MuseumFonts,
-  plaque: { style: string; title: string; artist: string; number: number },
+  plaque: { label: string; title: string; artist: string; number: number },
 ): THREE.CanvasTexture {
   const w = 800;
   const h = 450;
@@ -166,7 +166,7 @@ export function createPlaqueTexture(
   ctx.fillStyle = PURPLE_GLOW;
   ctx.font = `400 40px ${fonts.heading}`;
   ctx.letterSpacing = "8px";
-  ctx.fillText(plaque.style.toUpperCase(), 40, 80);
+  ctx.fillText(plaque.label.toUpperCase(), 40, 80);
   ctx.textAlign = "right";
   ctx.fillStyle = MUTED;
   ctx.fillText(String(plaque.number).padStart(2, "0"), w - 40, 80);

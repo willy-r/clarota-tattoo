@@ -2,9 +2,50 @@
   "items": [
     {
       "title": {
+        "name": "Ratinho",
+        "slug": "ratinho"
+      },
+      "category": "tatuagens",
+      "style": "Trash Tattoo",
+      "aspect": "square",
+      "image": "/portfolio/items/ratinho/image.webp"
+    },
+    {
+      "title": {
+        "name": "Lobos — tattoo em dupla",
+        "slug": "lobos-em-dupla"
+      },
+      "category": "tatuagens",
+      "style": "Trash Tattoo",
+      "aspect": "wide",
+      "image": "/portfolio/items/lobos-em-dupla/image.webp"
+    },
+    {
+      "title": {
+        "name": "Mimikyu",
+        "slug": "mimikyu"
+      },
+      "category": "tatuagens",
+      "style": "Geek",
+      "aspect": "tall",
+      "image": "/portfolio/items/mimikyu/image.webp"
+    },
+    {
+      "title": {
+        "name": "Corvo",
+        "slug": "corvo"
+      },
+      "category": "tatuagens",
+      "style": "Blackwork",
+      "aspect": "tall",
+      "image": "/portfolio/items/corvo/image.webp"
+    },
+    {
+      "title": {
         "name": "Máscara Noh — Hannya",
         "slug": "hannya"
       },
+      "category": "tatuagens",
       "style": "Blackwork",
       "aspect": "tall",
       "image": "/portfolio/items/hannya/image.webp"
@@ -14,6 +55,7 @@
         "name": "Cartelinha — Nostalgia Pessoal",
         "slug": "cartelinha-nostalgia"
       },
+      "category": "disponiveis",
       "style": "Geek",
       "aspect": "square",
       "image": "/portfolio/items/cartelinha-nostalgia/image.webp"
@@ -23,6 +65,7 @@
         "name": "Arte Autoral",
         "slug": "arte-autoral-2"
       },
+      "category": "autorais",
       "style": "Blackwork",
       "aspect": "wide",
       "image": "/portfolio/items/arte-autoral-2/image.webp"
@@ -32,6 +75,7 @@
         "name": "Coelhinhos — Watership Down",
         "slug": "coelhos-watership-down"
       },
+      "category": "tatuagens",
       "style": "Geek",
       "aspect": "square",
       "image": "/portfolio/items/coelhos-watership-down/image.webp"
@@ -41,24 +85,17 @@
         "name": "Cartelinha — Pokemons",
         "slug": "cartelinha-pokemons"
       },
+      "category": "disponiveis",
       "style": "Blackwork",
       "aspect": "tall",
       "image": "/portfolio/items/cartelinha-pokemons/image.webp"
     },
     {
       "title": {
-        "name": "Molenga — Saudades",
-        "slug": "molenga"
-      },
-      "style": "Geek",
-      "aspect": "tall",
-      "image": "/portfolio/items/molenga/image.webp"
-    },
-    {
-      "title": {
         "name": "Patinhos — A Viagem de Chihiro",
         "slug": "patinhos-a-viagem-de-chihiro"
       },
+      "category": "autorais",
       "style": "Blackwork",
       "aspect": "square",
       "image": "/portfolio/items/patinhos-a-viagem-de-chihiro/image.webp"
@@ -68,6 +105,7 @@
         "name": "Lucy",
         "slug": "lucy"
       },
+      "category": "autorais",
       "style": "Geek",
       "aspect": "wide",
       "image": "/portfolio/items/lucy/image.webp"
@@ -77,9 +115,70 @@
         "name": "Arte Autoral",
         "slug": "arte-autoral"
       },
+      "category": "autorais",
       "style": "Blackwork",
       "aspect": "square",
       "image": "/portfolio/items/arte-autoral/image.webp"
+    },
+    {
+      "title": {
+        "name": "Molenga — Saudades",
+        "slug": "molenga"
+      },
+      "category": "autorais",
+      "style": "Geek",
+      "aspect": "tall",
+      "image": "/portfolio/items/molenga/image.webp"
+    },
+    {
+      "title": {
+        "name": "Cabritinhos alados",
+        "slug": "cabritinhos-alados"
+      },
+      "category": "disponiveis",
+      "style": "Blackwork",
+      "aspect": "wide",
+      "image": "/portfolio/items/cabritinhos-alados/image.webp"
+    },
+    {
+      "title": {
+        "name": "Pierrôs",
+        "slug": "pierros"
+      },
+      "category": "disponiveis",
+      "style": "Blackwork",
+      "aspect": "square",
+      "image": "/portfolio/items/pierros/image.webp"
+    },
+    {
+      "title": {
+        "name": "Besouros",
+        "slug": "besouros"
+      },
+      "category": "disponiveis",
+      "style": "Blackwork",
+      "aspect": "square",
+      "image": "/portfolio/items/besouros/image.webp"
+    },
+    {
+      "title": {
+        "name": "A turma",
+        "slug": "a-turma"
+      },
+      "category": "autorais",
+      "style": "Geek",
+      "aspect": "wide",
+      "image": "/portfolio/items/a-turma/image.webp"
+    },
+    {
+      "title": {
+        "name": "Hatsune Miku",
+        "slug": "hatsune-miku"
+      },
+      "category": "autorais",
+      "style": "Geek",
+      "aspect": "tall",
+      "image": "/portfolio/items/hatsune-miku/image.webp"
     }
   ]
 }

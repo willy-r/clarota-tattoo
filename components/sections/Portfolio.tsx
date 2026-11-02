@@ -5,16 +5,44 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Landmark, Share2, X } from "lucide-react";
+import { Landmark, MessageCircle, Share2, X } from "lucide-react";
 import {
   PORTFOLIO_ITEMS,
   ARTIST,
   CONTACT,
+  portfolioAlt,
   type PortfolioItem,
 } from "@/lib/content";
+import {
+  PORTFOLIO_CATEGORIES,
+  categoryLabel,
+  type PortfolioCategory,
+} from "@/lib/categories";
+
+const PAGE_SIZE = 9;
+
+// Só vira aba a categoria que tem pelo menos uma arte cadastrada.
+const TABS = PORTFOLIO_CATEGORIES.map((category) => ({
+  ...category,
+  items: PORTFOLIO_ITEMS.filter((item) => item.category === category.value),
+})).filter((tab) => tab.items.length > 0);
+
+function flashWhatsappLink(title: string): string {
+  const text = `${CONTACT.whatsappMessage} (quero tatuar o flash "${title}")`;
+  return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`;
+}
 
 export default function Portfolio() {
   const [selected, setSelected] = useState<PortfolioItem | null>(null);
+  const [activeTab, setActiveTab] = useState<PortfolioCategory>(TABS[0].value);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const tab = TABS.find((t) => t.value === activeTab) ?? TABS[0];
+  const visibleItems = tab.items.slice(0, visibleCount);
+
+  const selectTab = (value: PortfolioCategory) => {
+    setActiveTab(value);
+    setVisibleCount(PAGE_SIZE);
+  };
   const zoomedRef = useRef(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -95,14 +123,60 @@ export default function Portfolio() {
           </Link>
         </motion.div>
 
+        {/* Abas por categoria */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-8"
+        >
+          <div
+            role="tablist"
+            aria-label="Categorias do portfólio"
+            className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1"
+          >
+            {TABS.map((t) => {
+              const active = t.value === tab.value;
+              return (
+                <button
+                  key={t.value}
+                  role="tab"
+                  id={`portfolio-tab-${t.value}`}
+                  aria-selected={active}
+                  aria-controls="portfolio-panel"
+                  onClick={() => selectTab(t.value)}
+                  className={`shrink-0 inline-flex items-center gap-2 rounded-full border px-5 py-2 font-heading text-sm tracking-[0.2em] transition-all duration-300 ${
+                    active
+                      ? "border-[#7c3aed] bg-[#7c3aed] text-white"
+                      : "border-[#1e1e1e] text-[#6b7280] hover:border-[#7c3aed]/50 hover:text-[#e8e0f0]"
+                  }`}
+                >
+                  {t.label.toUpperCase()}
+                  <span className={active ? "text-white/70" : "text-[#4b5563]"}>
+                    {t.items.length}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-4 font-editorial text-lg italic text-[#6b7280]">
+            {tab.description}
+          </p>
+        </motion.div>
+
         {/* Masonry grid */}
-        <div className="columns-2 md:columns-3 gap-3 space-y-3">
-          {PORTFOLIO_ITEMS.map((item, i) => (
+        <div
+          id="portfolio-panel"
+          role="tabpanel"
+          aria-labelledby={`portfolio-tab-${tab.value}`}
+          className="columns-2 md:columns-3 gap-3 space-y-3"
+        >
+          {visibleItems.map((item, i) => (
             <motion.div
-              key={item.slug}
+              key={`${tab.value}-${item.slug}`}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
+              transition={{ duration: 0.5, delay: (i % PAGE_SIZE) * 0.06 }}
               className="break-inside-avoid"
             >
               <button
@@ -119,7 +193,7 @@ export default function Portfolio() {
               >
                 <Image
                   src={item.image}
-                  alt={item.title}
+                  alt={portfolioAlt(item)}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 50vw, 33vw"
@@ -135,6 +209,17 @@ export default function Portfolio() {
             </motion.div>
           ))}
         </div>
+
+        {visibleCount < tab.items.length && (
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
+              className="font-heading text-sm tracking-[0.3em] px-8 py-3 border border-[#1e1e1e] text-[#e8e0f0] rounded-full hover:border-[#7c3aed] hover:text-[#a855f7] transition-all duration-300"
+            >
+              VER MAIS ({tab.items.length - visibleCount})
+            </button>
+          </div>
+        )}
 
         {/* Instagram CTA */}
         <motion.div
@@ -184,7 +269,7 @@ export default function Portfolio() {
               <Image
                 ref={imgRef as React.Ref<HTMLImageElement>}
                 src={selected.image}
-                alt={selected.title}
+                alt={portfolioAlt(selected)}
                 fill
                 sizes="(max-width: 768px) 90vw, 768px"
                 style={{ objectFit: "contain", willChange: "transform" }}
@@ -199,18 +284,31 @@ export default function Portfolio() {
                 {selected?.title}
               </h3>
               <p className="font-sans text-xs text-[#6b7280]">
-                Arte por {ARTIST.name}
+                {selected && categoryLabel(selected.category)} · Arte por{" "}
+                {ARTIST.name}
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <a
-                href={CONTACT.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-heading text-xs tracking-[0.2em] px-3 py-1.5 border border-[#7c3aed]/40 text-[#a855f7] rounded-full hover:bg-[#7c3aed] hover:text-white transition-all duration-200"
-              >
-                INSTAGRAM
-              </a>
+              {selected?.category === "disponiveis" ? (
+                <a
+                  href={flashWhatsappLink(selected.title)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-heading text-xs tracking-[0.2em] px-3 py-1.5 bg-[#7c3aed] text-white rounded-full hover:bg-[#a855f7] transition-all duration-200"
+                >
+                  <MessageCircle size={12} />
+                  QUERO TATUAR
+                </a>
+              ) : (
+                <a
+                  href={CONTACT.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-heading text-xs tracking-[0.2em] px-3 py-1.5 border border-[#7c3aed]/40 text-[#a855f7] rounded-full hover:bg-[#7c3aed] hover:text-white transition-all duration-200"
+                >
+                  INSTAGRAM
+                </a>
+              )}
               <button
                 onClick={() => setSelected(null)}
                 className="flex items-center justify-center w-8 h-8 rounded-full bg-[#1e1e1e] text-[#6b7280] hover:bg-[#7c3aed] hover:text-white transition-all duration-200 cursor-pointer"

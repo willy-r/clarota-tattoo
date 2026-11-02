@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import { ARTIST, CONTACT, type PortfolioItem } from "@/lib/content";
+import { categoryLabel } from "@/lib/categories";
 
 type MuseumHudProps = {
   items: PortfolioItem[];
@@ -31,6 +33,14 @@ const ROUND_BUTTON =
 export default function MuseumHud({ items, index, progress, onSelect, onPrev, onNext }: MuseumHudProps) {
   const loading = progress < 1;
   const current = index >= 0 ? items[index] : null;
+  const thumbsRef = useRef<HTMLElement>(null);
+
+  // Com muitas obras a faixa de miniaturas rola: mantém a obra atual visível.
+  useEffect(() => {
+    if (index < 0) return;
+    const thumb = thumbsRef.current?.children[index];
+    thumb?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [index]);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-10 select-none">
@@ -71,7 +81,7 @@ export default function MuseumHud({ items, index, progress, onSelect, onPrev, on
             >
               <div className="flex items-baseline justify-between">
                 <span className="font-heading text-sm tracking-[0.4em] text-[#a855f7]">
-                  {current.style.toUpperCase()}
+                  {categoryLabel(current.category).toUpperCase()}
                 </span>
                 <span className="font-heading text-sm tracking-[0.2em] text-[#8b8597]">
                   {pad(index + 1)} / {pad(items.length)}
@@ -136,6 +146,7 @@ export default function MuseumHud({ items, index, progress, onSelect, onPrev, on
 
       {/* Miniaturas: pular direto para qualquer obra */}
       <nav
+        ref={thumbsRef}
         aria-label="Obras"
         className="pointer-events-auto absolute bottom-8 left-1/2 flex max-w-[34vw] -translate-x-1/2 gap-2 overflow-x-auto p-1"
       >

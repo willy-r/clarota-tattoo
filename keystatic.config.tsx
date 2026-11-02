@@ -1,4 +1,5 @@
 import { config, fields, singleton } from "@keystatic/core";
+import { PORTFOLIO_CATEGORIES, categoryLabel } from "./lib/categories";
 
 // Mesmas opções do select de estilo do portfólio. Ao criar um estilo novo em "Estilos",
 // adicione aqui também para ele aparecer na lista.
@@ -147,7 +148,8 @@ export default config({
             title: fields.slug({
               name: {
                 label: "Título",
-                description: "Aparece ao passar o mouse na foto, no zoom e no museu 3D.",
+                description:
+                  "Aparece ao passar o mouse na foto, no zoom, no museu 3D e no Google (texto alternativo da imagem).",
                 validation: { isRequired: true },
               },
               slug: {
@@ -155,8 +157,15 @@ export default config({
                 description: "Gerado sozinho. Precisa ser único — se repetir um título, mude aqui.",
               },
             }),
+            category: fields.select({
+              label: "Categoria",
+              description: "Em qual aba do portfólio a arte aparece. No museu 3D vira a etiqueta da obra.",
+              options: PORTFOLIO_CATEGORIES.map((c) => ({ label: c.label, value: c.value })),
+              defaultValue: "tatuagens",
+            }),
             style: fields.select({
               label: "Estilo",
+              description: "Usado na descrição da imagem para o Google.",
               options: PORTFOLIO_STYLES.map((s) => ({ label: s, value: s })),
               defaultValue: "Blackwork",
             }),
@@ -176,10 +185,11 @@ export default config({
           }),
           {
             label: "Trabalhos",
-            description: "A ordem aqui é a ordem no site e no museu 3D. Arraste para reordenar.",
+            description:
+              "A ordem aqui é a ordem dentro de cada aba do site e no museu 3D. Arraste para reordenar.",
             slugField: "title",
             itemLabel: (props) =>
-              `${props.fields.title.value.name || "Novo trabalho"} · ${props.fields.style.value}`,
+              `${props.fields.title.value.name || "Novo trabalho"} · ${categoryLabel(props.fields.category.value)}`,
           },
         ),
       },

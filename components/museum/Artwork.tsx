@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLoader, type ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
+import { categoryLabel } from "@/lib/categories";
 import type { PortfolioItem } from "@/lib/content";
 import { ROOM, artSlot } from "./layout";
 import { createPlaqueTexture, type MuseumFonts } from "./textures";
@@ -101,8 +102,13 @@ export default function Artwork({
 
   const plaque = useMemo(
     () =>
-      createPlaqueTexture(fonts, { style: item.style, title: item.title, artist, number: index + 1 }),
-    [fonts, item.style, item.title, artist, index],
+      createPlaqueTexture(fonts, {
+        label: categoryLabel(item.category),
+        title: item.title,
+        artist,
+        number: index + 1,
+      }),
+    [fonts, item.category, item.title, artist, index],
   );
   useEffect(() => () => plaque.dispose(), [plaque]);
 
