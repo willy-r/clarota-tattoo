@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "name": "Trash Tattoo",
+      "description": "Estética crua, linhas irregulares e um toque de humor ácido. Tatuagens que parecem ter saído de um caderno rabiscado, mas com significado profundo.",
+      "icon": "☠"
+    },
+    {
+      "name": "Blackwork",
+      "description": "Composições em preto puro com alto contraste e impacto visual máximo. Linhas fortes, manchas densas e simbolismo marcante.",
+      "icon": "◆"
+    },
+    {
+      "name": "Geek",
+      "description": "Arte inspirada em games, anime, HQs e cultura pop. Personagens e universos que você ama eternizados na pele.",
+      "icon": "⬡"
+    }
+  ]
+}

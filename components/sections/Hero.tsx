@@ -49,8 +49,8 @@ export default function Hero() {
           <strong className="text-[#a855f7] font-heading">{ARTIST.city}</strong>
         </motion.p>
 
-        {/* Giant clipping mask name */}
-        <div className="flex overflow-hidden">
+        {/* Giant clipping mask name — é o h1 da página */}
+        <h1 className="flex overflow-hidden">
           {letters.map((letter, i) => (
             <motion.span
               key={i}
@@ -73,7 +73,11 @@ export default function Hero() {
               {letter}
             </motion.span>
           ))}
-        </div>
+          <span className="sr-only">
+            {" "}
+            — tatuadora em {ARTIST.city}
+          </span>
+        </h1>
 
         {/* Divider line */}
         <motion.div

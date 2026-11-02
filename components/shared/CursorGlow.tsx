@@ -10,6 +10,9 @@ export default function CursorGlow() {
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
+    // Em tela de toque não há cursor: nada de listeners nem loop de animação gastando bateria.
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const onMove = (e: MouseEvent) => {
@@ -66,12 +69,12 @@ export default function CursorGlow() {
     <>
       <div
         ref={dotRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-[#a855f7] transition-[scale] duration-150 ease-out"
+        className="pointer-coarse:hidden pointer-events-none fixed top-0 left-0 z-[9999] h-2 w-2 rounded-full bg-[#a855f7] transition-[scale] duration-150 ease-out"
         aria-hidden
       />
       <div
         ref={glowRef}
-        className="pointer-events-none fixed top-0 left-0 z-[9998] h-10 w-10 rounded-full bg-[#a855f7]/20 blur-md transition-[scale,opacity] duration-200"
+        className="pointer-coarse:hidden pointer-events-none fixed top-0 left-0 z-[9998] h-10 w-10 rounded-full bg-[#a855f7]/20 blur-md transition-[scale,opacity] duration-200"
         aria-hidden
       />
     </>
