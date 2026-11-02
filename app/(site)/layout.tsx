@@ -7,7 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { ARTIST, CONTACT } from "@/lib/content";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, googleSiteVerification } from "@/lib/site";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -71,6 +71,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
   },
   robots: { index: true, follow: true },
+  verification: { google: googleSiteVerification() },
   formatDetection: { telephone: false },
 };
 

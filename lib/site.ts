@@ -19,3 +19,13 @@ export const SITE_DESCRIPTION = `${ARTIST.name}: tatuadora e ilustradora em ${AR
 export function absoluteUrl(path: string): string {
   return new URL(path, SITE_URL).toString();
 }
+
+/**
+ * Código de verificação do Google Search Console (método "Tag HTML").
+ * Aceita só o código ou a meta tag inteira colada, que é o que o Search Console mostra.
+ */
+export function googleSiteVerification(): string | undefined {
+  const raw = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+  if (!raw) return undefined;
+  return raw.match(/content=["']([^"']+)["']/)?.[1] ?? raw;
+}
