@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Playfair_Display,
   Bebas_Neue,
@@ -6,6 +6,8 @@ import {
   Cormorant_Garamond,
 } from "next/font/google";
 import "./globals.css";
+import { ARTIST, CONTACT } from "@/lib/content";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -33,15 +35,48 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
+// "Fortaleza, CE" → "Fortaleza", para as buscas do tipo "tatuadora fortaleza".
+const CITY_NAME = ARTIST.city.split(",")[0].trim();
+
 export const metadata: Metadata = {
-  title: "Clarota Tattoo",
-  description:
-    "Tatuadora especialista em Trash Tattoo, Blackwork e Geek. Agendamentos via WhatsApp ou Instagram.",
-  openGraph: {
-    title: "Clarota Tattoo",
-    description:
-      "Tatuadora especialista em Trash Tattoo, Blackwork e Geek. Agendamentos via WhatsApp ou Instagram.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} · Tatuadora em ${ARTIST.city}`,
+    template: `%s · ${SITE_NAME}`,
   },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: ARTIST.name, url: CONTACT.instagramUrl }],
+  creator: ARTIST.name,
+  keywords: [
+    "tatuadora",
+    `tatuagem ${CITY_NAME}`,
+    `tatuadora ${CITY_NAME}`,
+    ...ARTIST.specialties.map((s) => s.toLowerCase()),
+    "flash tattoo",
+    "ilustração",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: "/",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} · Tatuadora em ${ARTIST.city}`,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} · Tatuadora em ${ARTIST.city}`,
+    description: SITE_DESCRIPTION,
+  },
+  robots: { index: true, follow: true },
+  formatDetection: { telephone: false },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

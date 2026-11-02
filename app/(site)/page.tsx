@@ -10,10 +10,12 @@ import StylesSection from "@/components/sections/Styles";
 import Booking from "@/components/sections/Booking";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+import StructuredData from "@/components/shared/StructuredData";
 
 export default function Home() {
   return (
     <>
+      <StructuredData />
       <CursorGlow />
       <NoiseOverlay />
       <ScrollProgress />
