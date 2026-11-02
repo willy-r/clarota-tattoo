@@ -68,9 +68,15 @@ o dev voltar a gravar nos arquivos locais.
 
 ### Portfólio
 
-- **Adicionar**: *Adicionar* → título, estilo, formato no mosaico e foto → *Concluído* → **Save**.
-- **Reordenar**: arraste pelo ícone ⠿ à esquerda. A primeira foto é a primeira do site e a
-  primeira obra do museu.
+- **Adicionar**: *Adicionar* → título, categoria, estilo, formato no mosaico e foto → *Concluído* → **Save**.
+- **Categoria**: define em qual aba do site a arte aparece — *Tatuagens feitas*, *Disponíveis*
+  (flashes/cartelas que podem ser tatuados; no zoom aparece o botão "Quero tatuar") ou *Arte
+  autoral*. Cada aba mostra 9 artes e um botão "Ver mais" quando tiver mais. As categorias ficam em
+  `lib/categories.ts` — para criar uma nova, adicione lá (vira aba e opção no painel sozinha).
+- **Título e estilo** também viram o texto alternativo da imagem, que é o que o Google Imagens lê.
+  Prefira títulos descritivos ("Corvo", "Lobos — tattoo em dupla") a genéricos ("Arte").
+- **Reordenar**: arraste pelo ícone ⠿ à esquerda. A ordem vale dentro de cada aba do site e é a
+  ordem das obras no museu.
 - **Títulos repetidos** (ex: duas "Arte Autoral"): o campo *Nome da pasta da foto* precisa ser
   diferente em cada um. Basta mudar ali, ex: `arte-autoral-2`.
 - **Fotos**: JPG ou WebP com até ~1600px no lado maior. Foto direto da câmera (4000px, 5 MB)

@@ -75,7 +75,7 @@ npm run start    # serve o build de produção
 
 ## Deploy
 
-Recomendado via [Vercel](https://vercel.com). Basta conectar o repositório. O site funciona sem variáveis de ambiente; o painel `/keystatic` só liga em produção depois de cadastrar as variáveis do GitHub App (ver [`docs/PAINEL.md`](./docs/PAINEL.md) e `.env.example`).
+Recomendado via [Vercel](https://vercel.com). Basta conectar o repositório. O site funciona sem variáveis de ambiente (na Vercel a URL pública usada no SEO é detectada sozinha; com domínio próprio, defina `NEXT_PUBLIC_SITE_URL`); o painel `/keystatic` só liga em produção depois de cadastrar as variáveis do GitHub App (ver [`docs/PAINEL.md`](./docs/PAINEL.md) e `.env.example`).
 
 ## Licença
 

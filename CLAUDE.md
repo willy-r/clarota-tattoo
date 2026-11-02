@@ -30,6 +30,12 @@ Single-page portfolio (landing page) for tattoo artist Clarota. All sections ren
 
 **All site content lives in `content/*.json`**, edited through Keystatic at `/keystatic` (schema in `keystatic.config.tsx`; local file storage in dev, GitHub storage in production). `lib/content.ts` imports the JSON and exports `ARTIST`, `CONTACT`, `STYLES`, `TESTIMONIALS`, `PORTFOLIO_ITEMS` — components import from there. Never hardcode copy inside components. When adding a field, add it to `keystatic.config.tsx` and the JSON together. Setup/usage: `docs/PAINEL.md`.
 
+Portfolio categories (`tatuagens`, `disponiveis`, `autorais`) live in `lib/categories.ts` and feed the Keystatic select, the portfolio tabs (9 per page + "Ver mais") and the museum plaques. `portfolioAlt()` in `lib/content.ts` builds the image alt text from title/category/style — use it for every portfolio `<Image>`.
+
+### SEO
+
+`lib/site.ts` resolves the public URL (`NEXT_PUBLIC_SITE_URL`, else Vercel's `VERCEL_PROJECT_PRODUCTION_URL`) and the site name/description, all derived from content. Metadata (title template, canonical, OG, Twitter) is in `app/(site)/layout.tsx`; `app/robots.ts` and `app/sitemap.ts` (with image sitemap) live at the app root; schema.org JSON-LD (TattooParlor, Person, ImageGallery) is `components/shared/StructuredData.tsx`. The hero name is the page's only `<h1>`.
+
 Design spec (colors, typography, section layout intent): `docs/design-spec.md`.
 
 ### Tailwind v4
