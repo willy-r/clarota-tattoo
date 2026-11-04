@@ -66,6 +66,12 @@ export default config({
           description: "Aparece no topo do site, no menu e no rodapé. Ex: Clarota",
           validation: { isRequired: true, length: { max: 30 } },
         }),
+        authorName: fields.text({
+          label: "Nome da autora",
+          description:
+            "Nome usado nos créditos e no copyright das imagens e na página de direitos de uso. Ex: Clara",
+          validation: { isRequired: true, length: { max: 60 } },
+        }),
         title: fields.text({
           label: "Como se apresenta",
           description:

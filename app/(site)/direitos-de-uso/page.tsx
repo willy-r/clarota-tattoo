@@ -5,7 +5,7 @@ import { ARTIST, CONTACT } from "@/lib/content";
 import { IMAGE_RIGHTS_PATH, IMAGE_RIGHTS_REQUEST_ANCHOR } from "@/lib/site";
 
 const title = "Direitos de uso das imagens";
-const description = `As fotos e desenhos de ${ARTIST.name} são protegidos por direitos autorais. Veja como pedir autorização de uso.`;
+const description = `As fotos e desenhos de ${ARTIST.authorName} são protegidos por direitos autorais. Veja como pedir autorização de uso.`;
 
 export const metadata: Metadata = {
   title,
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: IMAGE_RIGHTS_PATH },
 };
 
-const requestMessage = `Olá ${ARTIST.name}! Gostaria de pedir autorização para usar uma imagem do seu portfólio.`;
+const requestMessage = `Olá ${ARTIST.authorName}! Gostaria de pedir autorização para usar uma imagem do seu portfólio.`;
 
 export default function ImageRightsPage() {
   return (
@@ -35,7 +35,7 @@ export default function ImageRightsPage() {
         <div className="mt-10 space-y-6 font-sans text-base leading-relaxed text-[#b4adc0]">
           <p>
             Todas as fotos de tatuagens, flashes e ilustrações publicadas neste site são de autoria de{" "}
-            <strong className="text-[#e8e0f0]">{ARTIST.name}</strong> e protegidas pela Lei de Direitos
+            <strong className="text-[#e8e0f0]">{ARTIST.authorName}</strong> e protegidas pela Lei de Direitos
             Autorais (Lei nº 9.610/98).
           </p>
           <p>
@@ -44,7 +44,7 @@ export default function ImageRightsPage() {
           </p>
           <p>
             Os <strong className="text-[#e8e0f0]">flashes disponíveis</strong> são desenhos exclusivos: para
-            tatuar um deles, é só agendar com a própria {ARTIST.name}.
+            tatuar um deles, é só agendar com a própria {ARTIST.authorName}.
           </p>
           <p>
             Compartilhar o link do site ou repostar com crédito nas redes sociais (marcando{" "}

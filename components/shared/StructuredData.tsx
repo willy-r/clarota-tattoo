@@ -16,8 +16,8 @@ export default function StructuredData() {
   const imageRights = {
     license: absoluteUrl(IMAGE_RIGHTS_PATH),
     acquireLicensePage: absoluteUrl(`${IMAGE_RIGHTS_PATH}#${IMAGE_RIGHTS_REQUEST_ANCHOR}`),
-    creditText: ARTIST.name,
-    copyrightNotice: `© ${ARTIST.name}. Todos os direitos reservados.`,
+    creditText: ARTIST.authorName,
+    copyrightNotice: `© ${ARTIST.authorName}. Todos os direitos reservados.`,
   };
 
   const jsonLd = {
