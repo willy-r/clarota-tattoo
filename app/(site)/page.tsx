@@ -1,4 +1,3 @@
-import CursorGlow from "@/components/shared/CursorGlow";
 import NoiseOverlay from "@/components/shared/NoiseOverlay";
 import ScrollProgress from "@/components/shared/ScrollProgress";
 import Navbar from "@/components/shared/Navbar";
@@ -16,7 +15,6 @@ export default function Home() {
   return (
     <>
       <StructuredData />
-      <CursorGlow />
       <NoiseOverlay />
       <ScrollProgress />
       <Navbar />

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { ARTIST, CONTACT } from "@/lib/content";
+import { IMAGE_RIGHTS_PATH } from "@/lib/site";
 
 const NAV_LINKS = [
   { label: "Sobre", href: "#sobre" },
@@ -70,7 +72,10 @@ export default function Footer() {
             "A pele é o canvas mais honesto que existe."
           </p> */}
           <p className="font-sans text-xs text-[#6b7280]">
-            © {new Date().getFullYear()} {ARTIST.name} · Feito com 🖤
+            © {new Date().getFullYear()} {ARTIST.name} · Feito com 🖤 ·{" "}
+            <Link href={IMAGE_RIGHTS_PATH} className="hover:text-[#a855f7] transition-colors">
+              Direitos de uso das imagens
+            </Link>
           </p>
         </div>
       </div>

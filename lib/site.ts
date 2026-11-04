@@ -29,3 +29,8 @@ export function googleSiteVerification(): string | undefined {
   if (!raw) return undefined;
   return raw.match(/content=["']([^"']+)["']/)?.[1] ?? raw;
 }
+
+// Página com os termos de uso das imagens (todos os direitos reservados) e como pedir autorização.
+// Referenciada no JSON-LD das imagens (license / acquireLicensePage) e no rodapé.
+export const IMAGE_RIGHTS_PATH = "/direitos-de-uso";
+export const IMAGE_RIGHTS_REQUEST_ANCHOR = "pedir-autorizacao";

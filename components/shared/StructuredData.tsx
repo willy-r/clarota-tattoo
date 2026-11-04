@@ -1,11 +1,24 @@
 import { ARTIST, CONTACT, PORTFOLIO_ITEMS, portfolioAlt } from "@/lib/content";
-import { SITE_DESCRIPTION, SITE_NAME, absoluteUrl } from "@/lib/site";
+import {
+  IMAGE_RIGHTS_PATH,
+  IMAGE_RIGHTS_REQUEST_ANCHOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  absoluteUrl,
+} from "@/lib/site";
 
 // Dados estruturados (schema.org) para o Google entender que isto é um estúdio de tatuagem
 // local, quem é a artista e quais são as imagens do portfólio.
 export default function StructuredData() {
   const [city, region] = ARTIST.city.split(",").map((part) => part.trim());
   const artistId = absoluteUrl("/#artista");
+  // Metadados de licença do Google Imagens: todos os direitos reservados, com página para pedir uso.
+  const imageRights = {
+    license: absoluteUrl(IMAGE_RIGHTS_PATH),
+    acquireLicensePage: absoluteUrl(`${IMAGE_RIGHTS_PATH}#${IMAGE_RIGHTS_REQUEST_ANCHOR}`),
+    creditText: ARTIST.authorName,
+    copyrightNotice: `© ${ARTIST.authorName}. Todos os direitos reservados.`,
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -51,6 +64,7 @@ export default function StructuredData() {
           name: item.title,
           caption: portfolioAlt(item),
           creator: { "@id": artistId },
+          ...imageRights,
         })),
       },
     ],
