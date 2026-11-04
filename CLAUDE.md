@@ -34,7 +34,7 @@ Portfolio categories (`tatuagens`, `disponiveis`, `autorais`) live in `lib/categ
 
 ### SEO
 
-`lib/site.ts` resolves the public URL (`NEXT_PUBLIC_SITE_URL`, else Vercel's `VERCEL_PROJECT_PRODUCTION_URL`) and the site name/description, all derived from content. Metadata (title template, canonical, OG, Twitter) is in `app/(site)/layout.tsx`; `app/robots.ts` and `app/sitemap.ts` (with image sitemap) live at the app root; schema.org JSON-LD (TattooParlor, Person, ImageGallery) is `components/shared/StructuredData.tsx`. The hero name is the page's only `<h1>`. Search Console ownership uses the `GOOGLE_SITE_VERIFICATION` env var (meta tag method).
+`lib/site.ts` resolves the public URL (`NEXT_PUBLIC_SITE_URL`, else Vercel's `VERCEL_PROJECT_PRODUCTION_URL`) and the site name/description, all derived from content. Metadata (title template, canonical, OG, Twitter) is in `app/(site)/layout.tsx`; `app/robots.ts` and `app/sitemap.ts` (with image sitemap) live at the app root; schema.org JSON-LD (TattooParlor, Person, ImageGallery) is `components/shared/StructuredData.tsx`. The hero name is the page's only `<h1>`. Search Console ownership uses the `GOOGLE_SITE_VERIFICATION` env var (meta tag method). Portfolio art is all rights reserved (the repo `LICENSE` covers code only): every `ImageObject` carries `license`/`acquireLicensePage`/`creditText`/`copyrightNotice`, pointing at the `/direitos-de-uso` page.
 
 Design spec (colors, typography, section layout intent): `docs/design-spec.md`.
 

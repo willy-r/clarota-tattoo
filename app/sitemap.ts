@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PORTFOLIO_ITEMS } from "@/lib/content";
-import { absoluteUrl } from "@/lib/site";
+import { IMAGE_RIGHTS_PATH, absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -12,5 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: PORTFOLIO_ITEMS.map((item) => absoluteUrl(item.image)),
     },
     { url: absoluteUrl("/museu"), changeFrequency: "monthly", priority: 0.5 },
+    { url: absoluteUrl(IMAGE_RIGHTS_PATH), changeFrequency: "yearly", priority: 0.2 },
   ];
 }

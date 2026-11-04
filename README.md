@@ -79,4 +79,6 @@ Recomendado via [Vercel](https://vercel.com). Basta conectar o repositório. O s
 
 ## Licença
 
-[CC BY-NC 4.0](./LICENSE) — uso não comercial permitido com atribuição.
+Código e documentação: [CC BY-NC 4.0](./LICENSE) — uso não comercial permitido com atribuição.
+
+As fotos e artes de Clarota (`public/portfolio/`, `public/profile.jpg`) **não** estão sob essa licença: todos os direitos reservados. Ver a página [`/direitos-de-uso`](https://clarota-tattoo.vercel.app/direitos-de-uso), que também é referenciada nos metadados de licença das imagens (JSON-LD).
