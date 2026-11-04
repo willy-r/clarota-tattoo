@@ -6,6 +6,7 @@ import {
   Cormorant_Garamond,
 } from "next/font/google";
 import "./globals.css";
+import CursorGlow from "@/components/shared/CursorGlow";
 import { ARTIST, CONTACT } from "@/lib/content";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, googleSiteVerification } from "@/lib/site";
 
@@ -90,7 +91,11 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${playfair.variable} ${bebas.variable} ${dmSans.variable} ${cormorant.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        {/* O html esconde o cursor nativo (cursor: none); toda página do site precisa do substituto */}
+        <CursorGlow />
+        {children}
+      </body>
     </html>
   );
 }
